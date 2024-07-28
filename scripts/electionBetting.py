@@ -31,10 +31,11 @@ if 'stage' not in st.session_state:
 
 if st.session_state.stage == 0:
     input = st.text_input("Which MP from the 2019 parliament will you bet on?", "Leo Docherty")
+    st.session_state.input = input
     st.button('Find out their Odds', on_click=set_state, args=[1])
 
 def CleanName(input):
-    trimmed = input.strip(' ')
+    trimmed = input.strip()
     split_up = [word.strip() for word in trimmed.split(' ')]
     first = split_up[0].lower()
     second = split_up[1].lower()
@@ -81,9 +82,8 @@ def FindSuccessor(constituency):
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 
 
-
 if st.session_state.stage == 1:
-    CleanName(input)
+    CleanName(st.session_state.input)
     Result = st.selectbox(
         'Pick a result',
         [None, 'They Won!', 'They lost.'],

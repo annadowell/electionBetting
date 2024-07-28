@@ -32,7 +32,6 @@ def CleanName(string):
     firstName = first.capitalize()
     secondName = second.capitalize()
     if firstName in df2019Constituency.values:
-        st.write('yay')
         if secondName in df2019Constituency.values:
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
@@ -42,7 +41,12 @@ def CleanName(string):
             return
         else:
             st.write_stream('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+            set_state(0)
             return
+    else:
+        st.write_stream('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+        set_state(0)
+        return
 
     
     

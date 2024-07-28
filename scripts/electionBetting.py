@@ -81,7 +81,7 @@ def set_state(i):
 if st.session_state.stage == 0:
     st.button('Find out their Odds', on_click=set_state, args=[1])
 
-if st.session_state.stage >= 1:
+if st.session_state.stage == 1:
     CleanName(input)
     Result = st.selectbox(
         'Pick a result',

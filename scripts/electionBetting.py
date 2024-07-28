@@ -46,9 +46,9 @@ def CleanName(string):
             st.session_state.secondName = secondName
             return
         else:
-            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).', on_change=set_state, args=[0])
+            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). YIP', on_change=set_state, args=[0])
     else:
-        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).', on_change=set_state, args=[0])
+        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). YAY', on_change=set_state, args=[0])
 
     
     

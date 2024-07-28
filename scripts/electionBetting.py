@@ -89,15 +89,21 @@ def FindtheChange(first, second):
         st.session_state.stage = 0
 
 def FindSuccessor(constituency):
-    Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]
-    Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
-    Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
-    WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
-    st.session_state.newMpSurname = Mp2024second
-    st.session_state.newMpForename = Mp2024first
-    st.session_state.result = Result
-    st.session_state.NewWinningVoteShare = WinningVoteShare
-    return Mp2024first, Mp2024second, Result, WinningVoteShare
+    if st.session_state.firstName in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
+        if st.session_state.secondName in dfCandidates2024['CandidateSurname'].str.capitalize().values:
+            Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]
+            Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
+            Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
+            WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
+            st.session_state.newMpSurname = Mp2024second
+            st.session_state.newMpForename = Mp2024first
+            st.session_state.result = Result
+            st.session_state.NewWinningVoteShare = WinningVoteShare
+            return Mp2024first, Mp2024second, Result, WinningVoteShare
+        else:
+            return
+    else: 
+        return
 
 if st.session_state.stage == 1:
     CleanName(st.session_state.input)
@@ -136,12 +142,12 @@ if st.session_state.stage == 3:
 
 #version for if they guessed losing
 if st.session_state.stage == 4:
-    with st.spinner('Wait for it...'):
-        time.sleep(5)
-    st.success("And the results are...")
     FindtheChange(st.session_state.firstName, st.session_state.secondName)
     FindSuccessor(st.session_state.constituency)
     if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
+        with st.spinner('Wait for it...'):
+            time.sleep(5)
+        st.success("And the results are...")
         #therefore they were wrong they were re-elected
         st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdqTWRKqZ2uXtueLULqJP7zC0-_1NTmrQJDQ&s")
         st.audio("https://github.com/annadowell/electionBetting/raw/main/audio/sadtrombone.swf.mp3", autoplay=True)
@@ -149,6 +155,9 @@ if st.session_state.stage == 4:
         st.write(f'They were actually re-elected! They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
         st.button('Play Again?', on_click=set_state, args=[0])        
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
+        with st.spinner('Wait for it...'):
+            time.sleep(5)
+        st.success("And the results are...")
         #therefore they were correct, their mp was not re-elected
         st.balloons()
         st.header('You win!')

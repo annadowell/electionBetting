@@ -65,7 +65,7 @@ if st.session_state.stage >= 1:
     CleanName(input)
     Result = st.selectbox(
         'Pick a result',
-        [None, 'win', 'lose'],
+        [None, 'They Won!', 'They lost.'],
         on_change=set_state, args=[2]
     )
 
@@ -74,7 +74,7 @@ if st.session_state.stage >= 2:
     FindSuccessor(st.session_state.constituency)
     Next = st.selectbox(
         'Gamble again?',
-        [None, 'yes'],
+        [None, 'Yes'],
         on_change=set_state, args=[0]
     )
     if Next is None:

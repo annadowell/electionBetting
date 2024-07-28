@@ -116,7 +116,7 @@ if st.session_state.stage == 3:
         st.button('Play Again?', on_click=set_state, args=[0])
 
 #version for if they guessed losing
-if st.session_state.stage == 3:
+if st.session_state.stage == 4:
     with st.spinner('Wait for it...'):
         time.sleep(5)
     st.success("And the results are...")

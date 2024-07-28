@@ -40,10 +40,10 @@ def FindtheChange(first, second):
     return
 
 def FindSuccessor(constituency):
-    Mp2024first = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberFirstName'].values[0]
-    Mp2024second = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberSurname'].values[0]
-    Result = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'Result'].values[0]
-    WinningVoteShare = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
+    Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]
+    Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
+    Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
+    WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
     st.write(f'The result was a {Result}. The MP who serves the seat they contested is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 

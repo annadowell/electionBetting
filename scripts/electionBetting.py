@@ -41,11 +41,11 @@ def CleanName(string):
             return
         else:
             st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-            set_state(0)
+            st.session_state.stage = 0
             return
     else:
         st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-        set_state(0)
+        st.session_state.stage = 0
         return
 
     

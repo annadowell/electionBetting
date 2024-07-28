@@ -74,7 +74,6 @@ def FindSuccessor(constituency):
     Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
     Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
     WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
-    st.write(f'The result was a {Result}. The MP who serves the seat they contested is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     st.session_state.newMpSurname = Mp2024second
     st.session_state.newMpForename = Mp2024first
     st.session_state.result = Result
@@ -108,7 +107,7 @@ if st.session_state.stage == 3:
         st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
         #therefore they were wrong, their MP was not r-elected
-        st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
+        #st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')
         st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
         st.button('Play Again?', on_click=set_state, args=[0])

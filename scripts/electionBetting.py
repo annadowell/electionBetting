@@ -30,10 +30,7 @@ def CleanName(string):
     st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
     
 
-    
-if st.button("Spin"):
+if st.button("Find out their Odds"):
     CleanName(input)
-    st.button("Bet")
-
-if st.button("Bet"):
-    st.write('place a bet')
+    if st.button("Bet"):
+        st.write('place a bet')

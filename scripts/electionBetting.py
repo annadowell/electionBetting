@@ -32,8 +32,7 @@ def CleanName(string):
     firstName = first.capitalize()
     secondName = second.capitalize()
     if firstName in df2019Constituency:
-        thatSurname = df2019Constituency.loc[(df2019Constituency['MemberFirstName'] == firstName), 'MemberSurname'].values[0]
-        if thatSurname == secondName:
+        if (df2019Constituency.loc[(df2019Constituency['MemberFirstName'] == firstName), 'MemberSurname'].values[0]) == secondName:
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
             st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
@@ -102,7 +101,6 @@ if st.session_state.stage == 3:
         st.balloons()
         st.header('You win!')
         st.write_stream(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
-        
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
         #therefore they were wrong, their MP was not r-elected
         st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")

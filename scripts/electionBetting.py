@@ -49,14 +49,7 @@ def FindSuccessor(constituency):
     st.write(f'The result was a {Result}. The MP who serves the seat they contested is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 
-m = st.markdown("""
-<style>
-div.stButton > button:first-child {
-    background-color: rgb(204, 49, 49);
-}
-</style>""", unsafe_allow_html=True)
 
-    
 if 'stage' not in st.session_state:
     st.session_state.stage = 0
 

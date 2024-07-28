@@ -32,7 +32,7 @@ if 'stage' not in st.session_state:
 if st.session_state.stage == 0:
     input = st.text_input("Which MP from the 2019 parliament will you bet on?", "Leo Docherty")
     st.session_state.input = input
-    st.button('Find out their Odds', on_click=set_state, args=[1])
+    st.button('Find out their historical results', on_click=set_state, args=[1])
 
 # def CalculateOdds(percentage):
 #     number = percentage.strip('%')
@@ -72,13 +72,21 @@ def CleanName(input):
     
     
 def FindtheChange(first, second):
-    VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
-    Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
-    constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
-    st.session_state.constituency = constituency
-    st.session_state.SubjectVoteShare = VoteShare2024
-    st.session_state.SubjectSwing = Swing
-    return
+    if first in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
+        if second in dfCandidates2024['CandidateSurname'].str.capitalize().values:
+            VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
+            Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
+            constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
+            st.session_state.constituency = constituency
+            st.session_state.SubjectVoteShare = VoteShare2024
+            st.session_state.SubjectSwing = Swing
+            return
+        else:
+            st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+            st.session_state.stage = 0
+    else:
+        st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+        st.session_state.stage = 0
 
 def FindSuccessor(constituency):
     Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]

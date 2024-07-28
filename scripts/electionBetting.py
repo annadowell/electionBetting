@@ -53,8 +53,8 @@ def CleanName(input):
     secondName = second.capitalize()
     if firstName in df2019Constituency['MemberFirstName'].str.capitalize().values:
         #st.write('yay')
-        #if (secondName in df2019Constituency['MemberSurname'].str.capitalize().values) & :
-        if secondName == (df2019Constituency.loc[(df2019Constituency['MemberFirstName'] == firstName, 'MemberSurname')]):
+        filtered_df = df2019Constituency[df2019Constituency['MemberFirstName'].str.capitalize() == firstName]
+        if secondName in filtered_df['MemberSurname'].str.capitalize().values:
             #st.write('yip')
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             #Odds = CalculateOdds(VoteShare2019)

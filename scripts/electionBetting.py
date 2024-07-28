@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import time
 
+def set_state(i):
+    st.session_state.stage = i
+
 st.image("https://cdn2.iconfinder.com/data/icons/croupier/500/vab895_22_slot_machine_isometric_cartoon_retro_vintage_fruit-512.png")
 
 st.title('Bet on the Election')
@@ -40,13 +43,9 @@ def CleanName(string):
             st.session_state.secondName = secondName
             return
         else:
-            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-            st.session_state.stage = 0
-            return
+            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).', on_change=set_state, args=[0])
     else:
-        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-        st.session_state.stage = 0
-        return
+        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).', on_change=set_state, args=[0])
 
     
     
@@ -75,8 +74,7 @@ def FindSuccessor(constituency):
 if 'stage' not in st.session_state:
     st.session_state.stage = 0
 
-def set_state(i):
-    st.session_state.stage = i
+
 
 if st.session_state.stage == 0:
     st.button('Find out their Odds', on_click=set_state, args=[1])

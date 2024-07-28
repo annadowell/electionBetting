@@ -34,15 +34,15 @@ if st.session_state.stage == 0:
     st.session_state.input = input
     st.button('Find out their Odds', on_click=set_state, args=[1])
 
-def CalculateOdds(percentage):
-    number = percentage.strip('%')
-    decimal = float(number)/100
-    otherOdd = 1 - decimal
-    Odds = decimal/otherOdd
-    NiceOdds = float.as_integer_ratio(Odds)
-    stringOdds = str(NiceOdds)
-    clean = stringOdds.replace(', ','/')
-    return(clean)
+# def CalculateOdds(percentage):
+#     number = percentage.strip('%')
+#     decimal = float(number)/100
+#     otherOdd = 1 - decimal
+#     Odds = decimal/otherOdd
+#     NiceOdds = float.as_integer_ratio(Odds)
+#     stringOdds = str(NiceOdds)
+#     clean = stringOdds.replace(', ','/')
+#     return(clean)
 
 def CleanName(input):
     trimmed = input.strip()
@@ -56,9 +56,9 @@ def CleanName(input):
         if secondName in df2019Constituency['MemberSurname'].str.capitalize().values:
             #st.write('yip')
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
-            Odds = CalculateOdds(VoteShare2019)
+            #Odds = CalculateOdds(VoteShare2019)
             constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
-            st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. As an odds, their 2019 result would be a prediction of {Odds}. Do you bet they kept their seat?')
+            st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you bet they kept their seat?')
             st.session_state.firstName = firstName
             st.session_state.secondName = secondName
             return

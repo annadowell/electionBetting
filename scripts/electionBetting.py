@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F6658449%2Fcartoon_fruit_isometric_machine_retro_slot_vintage_icon&psig=AOvVaw0_E-1EwmKz3tPNlpslr7ii&ust=1722268178697000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCP8o-LyocDFQAAAAAdAAAAABAE")
+st.image("https://cdn2.iconfinder.com/data/icons/croupier/500/vab895_22_slot_machine_isometric_cartoon_retro_vintage_fruit-512.png")
 
 st.title('Bet on the Election')
 

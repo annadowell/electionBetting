@@ -39,6 +39,7 @@ st.button('Find out their Odds', on_click=click_button)
 if st.session_state.clicked:
     # The message and nested widget will remain on the page
     CleanName(input)
+    st.slider('Bet a value for them to keep their seat')
 
 
 def FindtheChange(first, second):

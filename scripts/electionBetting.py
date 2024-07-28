@@ -35,9 +35,9 @@ def CleanName(string):
     second = split_up[1].lower()
     firstName = first.capitalize()
     secondName = second.capitalize()
-    if firstName in df2019Constituency.values:
+    if df2019Constituency.isin(firstName):
         st.write('yay')
-        if secondName in df2019Constituency.values:
+        if df2019Constituency.isin(secondName):
             st.write('yip')
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]

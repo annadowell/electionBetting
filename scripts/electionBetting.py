@@ -104,15 +104,15 @@ if st.session_state.stage == 3:
         #therefore they were right
         st.balloons()
         st.header('You win!')
-        st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
+        st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
         with st.spinner('Wait for it...'):
             time.sleep(5)
         st.success("And the results are...")
         #therefore they were wrong, their MP was not r-elected
-        #st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
+        st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')
-        st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
+        st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
         st.button('Play Again?', on_click=set_state, args=[0])
 
 #version for if they guessed losing
@@ -132,7 +132,7 @@ if st.session_state.stage == 4:
         #therefore they were correct, their mp was not re-elected
         st.balloons()
         st.header('You win!')
-        st.write(f'They were indeed not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
+        st.write(f'They were indeed not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
         st.button('Play Again?', on_click=set_state, args=[0])
         
 

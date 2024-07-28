@@ -110,7 +110,7 @@ if st.session_state.stage == 3:
             time.sleep(5)
         st.success("And the results are...")
         #therefore they were wrong, their MP was not r-elected
-        st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
+        st.audio("https://github.com/annadowell/electionBetting/blob/main/audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')
         st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
         st.button('Play Again?', on_click=set_state, args=[0])
@@ -124,7 +124,7 @@ if st.session_state.stage == 4:
     FindSuccessor(st.session_state.constituency)
     if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
         #therefore they were wrong they were re-elected
-        st.audio("/audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
+        st.audio("https://github.com/annadowell/electionBetting/blob/main/audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')
         st.write(f'They were actually re-elected! They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
         st.button('Play Again?', on_click=set_state, args=[0])        

@@ -26,8 +26,10 @@ input = st.text_input("Which MP from the 2019 parliament will you bet on?", "Leo
 def CleanName(string):
     trimmed = string.strip()
     split_up = [word.strip() for word in trimmed.split(' ')]
-    firstName = split_up[0]
-    secondName = split_up[1]
+    first = split_up[0].lower()
+    second = split_up[1].lower()
+    firstName = first.capitalize()
+    secondName = second.capitalize()
     VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
     constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
     st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')

@@ -39,7 +39,7 @@ def FindtheChange(first, second):
     VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
     Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
     constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
-    st.write(f'In 2024, they won {VoteShare2024} of the vote in their constituency {constituency}. This was a swing of {Swing}')
+    st.write(f'In 2024, they won {VoteShare2024} of the vote in {constituency}, the constituency they contested after the boundaries were redrawn. This was calculated as a swing of {Swing}')
     st.session_state.constituency = constituency
     return
 

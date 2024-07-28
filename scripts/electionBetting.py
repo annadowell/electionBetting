@@ -6,6 +6,6 @@ def load_data(url):
     data = pd.read_csv(url)
     return data
 
-Constituency2019 = ('https://raw.githubusercontent.com/annadowell/streamlitMpsApp/main/mpsQuestions2019.csv')
+Constituency2019 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2019-constituency.csv?token=GHSAT0AAAAAACUMUCNQ2WVTQQAWWUTNUUFEZVGJVSA')
 df2019Constituency = load_data(Constituency2019)
 st.write(df2019Constituency)

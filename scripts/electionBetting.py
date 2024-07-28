@@ -25,6 +25,7 @@ Candidates2024 = ('https://raw.githubusercontent.com/annadowell/electionBetting/
 dfCandidates2024 = load_data(Candidates2024)
 #st.write(dfCandidates2024)
 
+# if st.session_state.stage == 0:
 input = st.text_input("Which MP from the 2019 parliament will you bet on?", "Leo Docherty")
 
 def CleanName(string):
@@ -74,10 +75,10 @@ def FindSuccessor(constituency):
 if 'stage' not in st.session_state:
     st.session_state.stage = 0
 
+# if st.session_state.stage == 0:
+#     st.button('Find out their Odds')
 
-
-if st.session_state.stage == 0:
-    st.button('Find out their Odds', on_click=set_state, args=[1])
+st.button('Find out their Odds', on_click=set_state, args=[1])
 
 if st.session_state.stage == 1:
     CleanName(input)

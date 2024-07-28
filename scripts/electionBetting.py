@@ -64,10 +64,10 @@ def CleanName(input):
             return
         else:
             st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-            st.session_state.stage = 0
+            st.button('Play Again?', on_click=set_state, args=[0])
     else:
         st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
-        st.session_state.stage = 0
+        st.button('Play Again?', on_click=set_state, args=[0])
 
     
     
@@ -117,6 +117,7 @@ if st.session_state.stage == 3:
                 st.balloons()
                 st.header('You win!')
                 st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
+                st.button('Play Again?', on_click=set_state, args=[0])
             if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
                 with st.spinner('Wait for it...'):
                     time.sleep(5)
@@ -129,10 +130,10 @@ if st.session_state.stage == 3:
                 st.button('Play Again?', on_click=set_state, args=[0])
         else:
             st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-            st.session_state.stage = 0
+            st.button('Play Again?', on_click=set_state, args=[0])
     else:
         st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-        st.session_state.stage = 0
+        st.button('Play Again?', on_click=set_state, args=[0])
 
 #version for if they guessed losing
 if st.session_state.stage == 4:
@@ -161,9 +162,9 @@ if st.session_state.stage == 4:
                 st.button('Play Again?', on_click=set_state, args=[0])
         else:
             st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-            st.session_state.stage = 0
+            st.button('Play Again?', on_click=set_state, args=[0])
     else:
         st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-        st.session_state.stage = 0
+        st.button('Play Again?', on_click=set_state, args=[0])
                 
 

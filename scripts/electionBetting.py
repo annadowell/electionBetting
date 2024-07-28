@@ -95,17 +95,20 @@ if st.session_state.stage == 1:
 
 #version for if they guessed winning
 if st.session_state.stage == 3:
-    with st.spinner('Wait for it...'):
-        time.sleep(5)
-    st.success("And the results are...")
     FindtheChange(st.session_state.firstName, st.session_state.secondName)
     FindSuccessor(st.session_state.constituency)
     if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
+        with st.spinner('Wait for it...'):
+            time.sleep(5)
+        st.success("And the results are...")
         #therefore they were right
         st.balloons()
         st.header('You win!')
         st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
+        with st.spinner('Wait for it...'):
+            time.sleep(5)
+        st.success("And the results are...")
         #therefore they were wrong, their MP was not r-elected
         #st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')

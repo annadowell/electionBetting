@@ -6,8 +6,6 @@ st.image("https://cdn2.iconfinder.com/data/icons/croupier/500/vab895_22_slot_mac
 
 st.title('Bet on the Election')
 
-st.sidebar.[Tally]
-
 def load_data(url):
     data = pd.read_csv(url)
     return data

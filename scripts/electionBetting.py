@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import time
 
-def set_state(i):
-    st.session_state.stage = i
 
 st.image("https://cdn2.iconfinder.com/data/icons/croupier/500/vab895_22_slot_machine_isometric_cartoon_retro_vintage_fruit-512.png")
 
@@ -24,6 +22,12 @@ df2024Constituency = load_data(Constituency2024)
 Candidates2024 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2024-candidate.csv')
 dfCandidates2024 = load_data(Candidates2024)
 #st.write(dfCandidates2024)
+
+def set_state(i):
+    st.session_state.stage = i
+
+if 'stage' not in st.session_state:
+    st.session_state.stage = 0
 
 if st.session_state.stage == 0:
     input = st.text_input("Which MP from the 2019 parliament will you bet on?", "Leo Docherty")
@@ -77,12 +81,7 @@ def FindSuccessor(constituency):
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 
 
-if 'stage' not in st.session_state:
-    st.session_state.stage = 0
-
-#if st.session_state.stage == 0:
     
-
 if st.session_state.stage == 1:
     CleanName(input)
     st.session_state.stage = 2

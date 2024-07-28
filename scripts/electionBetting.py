@@ -72,38 +72,24 @@ def CleanName(input):
     
     
 def FindtheChange(first, second):
-    if first in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
-        if second in dfCandidates2024['CandidateSurname'].str.capitalize().values:
-            VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
-            Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
-            constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
-            st.session_state.constituency = constituency
-            st.session_state.SubjectVoteShare = VoteShare2024
-            st.session_state.SubjectSwing = Swing
-            return
-        else:
-            st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-            st.session_state.stage = 0
-    else:
-        st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
-        st.session_state.stage = 0
+    VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
+    Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
+    constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
+    st.session_state.constituency = constituency
+    st.session_state.SubjectVoteShare = VoteShare2024
+    st.session_state.SubjectSwing = Swing
+    return
 
 def FindSuccessor(constituency):
-    if st.session_state.firstName in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
-        if st.session_state.secondName in dfCandidates2024['CandidateSurname'].str.capitalize().values:
-            Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]
-            Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
-            Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
-            WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
-            st.session_state.newMpSurname = Mp2024second
-            st.session_state.newMpForename = Mp2024first
-            st.session_state.result = Result
-            st.session_state.NewWinningVoteShare = WinningVoteShare
-            return Mp2024first, Mp2024second, Result, WinningVoteShare
-        else:
-            return
-    else: 
-        return
+    Mp2024first = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberFirstName'].values[0]
+    Mp2024second = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'MemberSurname'].values[0]
+    Result = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'Result'].values[0]
+    WinningVoteShare = df2024Constituency.loc[(df2024Constituency['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
+    st.session_state.newMpSurname = Mp2024second
+    st.session_state.newMpForename = Mp2024first
+    st.session_state.result = Result
+    st.session_state.NewWinningVoteShare = WinningVoteShare
+    return Mp2024first, Mp2024second, Result, WinningVoteShare
 
 if st.session_state.stage == 1:
     CleanName(st.session_state.input)
@@ -119,49 +105,65 @@ if st.session_state.stage == 1:
 
 #version for if they guessed winning
 if st.session_state.stage == 3:
-    FindtheChange(st.session_state.firstName, st.session_state.secondName)
-    FindSuccessor(st.session_state.constituency)
-    if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
-        with st.spinner('Wait for it...'):
-            time.sleep(5)
-        st.success("And the results are...")
-        #therefore they were right
-        st.balloons()
-        st.header('You win!')
-        st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
-    if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
-        with st.spinner('Wait for it...'):
-            time.sleep(5)
-        st.success("And the results are...")
-        #therefore they were wrong, their MP was not r-elected
-        st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdqTWRKqZ2uXtueLULqJP7zC0-_1NTmrQJDQ&s")
-        st.audio("https://github.com/annadowell/electionBetting/raw/main/audio/sadtrombone.swf.mp3", autoplay=True)
-        st.header('You Lose.')
-        st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
-        st.button('Play Again?', on_click=set_state, args=[0])
+    if st.session_state.firstName in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
+        if st.session_state.secondName in dfCandidates2024['CandidateSurname'].str.capitalize().values:
+            FindtheChange(st.session_state.firstName, st.session_state.secondName)
+            FindSuccessor(st.session_state.constituency)
+            if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
+                with st.spinner('Wait for it...'):
+                    time.sleep(5)
+                st.success("And the results are...")
+                #therefore they were right
+                st.balloons()
+                st.header('You win!')
+                st.write(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
+            if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
+                with st.spinner('Wait for it...'):
+                    time.sleep(5)
+                st.success("And the results are...")
+                #therefore they were wrong, their MP was not r-elected
+                st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdqTWRKqZ2uXtueLULqJP7zC0-_1NTmrQJDQ&s")
+                st.audio("https://github.com/annadowell/electionBetting/raw/main/audio/sadtrombone.swf.mp3", autoplay=True)
+                st.header('You Lose.')
+                st.write(f'They were not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
+                st.button('Play Again?', on_click=set_state, args=[0])
+        else:
+            st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+            st.session_state.stage = 0
+    else:
+        st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+        st.session_state.stage = 0
 
 #version for if they guessed losing
 if st.session_state.stage == 4:
-    FindtheChange(st.session_state.firstName, st.session_state.secondName)
-    FindSuccessor(st.session_state.constituency)
-    if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
-        with st.spinner('Wait for it...'):
-            time.sleep(5)
-        st.success("And the results are...")
-        #therefore they were wrong they were re-elected
-        st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdqTWRKqZ2uXtueLULqJP7zC0-_1NTmrQJDQ&s")
-        st.audio("https://github.com/annadowell/electionBetting/raw/main/audio/sadtrombone.swf.mp3", autoplay=True)
-        st.header('You Lose.')
-        st.write(f'They were actually re-elected! They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
-        st.button('Play Again?', on_click=set_state, args=[0])        
-    if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
-        with st.spinner('Wait for it...'):
-            time.sleep(5)
-        st.success("And the results are...")
-        #therefore they were correct, their mp was not re-elected
-        st.balloons()
-        st.header('You win!')
-        st.write(f'They were indeed not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
-        st.button('Play Again?', on_click=set_state, args=[0])
-        
+    if st.session_state.firstName in dfCandidates2024['CandidateFirstName'].str.capitalize().values:
+        if st.session_state.secondName in dfCandidates2024['CandidateSurname'].str.capitalize().values:
+            FindtheChange(st.session_state.firstName, st.session_state.secondName)
+            FindSuccessor(st.session_state.constituency)
+            if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
+                with st.spinner('Wait for it...'):
+                    time.sleep(5)
+                st.success("And the results are...")
+                #therefore they were wrong they were re-elected
+                st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdqTWRKqZ2uXtueLULqJP7zC0-_1NTmrQJDQ&s")
+                st.audio("https://github.com/annadowell/electionBetting/raw/main/audio/sadtrombone.swf.mp3", autoplay=True)
+                st.header('You Lose.')
+                st.write(f'They were actually re-elected! They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
+                st.button('Play Again?', on_click=set_state, args=[0])        
+            if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
+                with st.spinner('Wait for it...'):
+                    time.sleep(5)
+                st.success("And the results are...")
+                #therefore they were correct, their mp was not re-elected
+                st.balloons()
+                st.header('You win!')
+                st.write(f'They were indeed not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
+                st.button('Play Again?', on_click=set_state, args=[0])
+        else:
+            st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+            st.session_state.stage = 0
+    else:
+        st.write('Sorry! It seems that MP stood down before the 2024 election. Please try someone else.')
+        st.session_state.stage = 0
+                
 

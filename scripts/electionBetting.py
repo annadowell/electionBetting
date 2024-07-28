@@ -86,8 +86,7 @@ if st.session_state.stage == 1:
     CleanName(st.session_state.input)
     Result = st.selectbox(
         'Pick a result',
-        [None, 'They Won!', 'They lost.'],
-        on_change=set_state, args=[2]
+        [None, 'They Won!', 'They lost.']
     )
     if Result is 'They Won!':
         set_state(3)

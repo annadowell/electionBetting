@@ -27,25 +27,15 @@ def CleanName(string):
     VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
     constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
     st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
+    st.session_state.firstName = firstName
+    st.session_state.secondName = secondName
+    st.session_state.constituency = constituency
     
-if 'clicked' not in st.session_state:
-    st.session_state.clicked = False
-
-def click_button():
-    st.session_state.clicked = True
-
-st.button('Find out their Odds', on_click=click_button)
-
-if st.session_state.clicked:
-    # The message and nested widget will remain on the page
-    CleanName(input)
-    st.slider('Bet a value for them to keep their seat')
-
-
 def FindtheChange(first, second):
     VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Share'].values[0]
     Swing = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Change'].values[0]
     constituency = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Constituency'].values[0]
+    st.write(f'In 2024, they won {VoteShare2024} of the vote in their constituency {constituency}. This was a swing of {Swing}')
     return VoteShare2024, Swing, constituency
 
 def FindSuccessor(constituency):
@@ -53,6 +43,43 @@ def FindSuccessor(constituency):
     Mp2024second = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberSurname'].values[0]
     Result = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'Result'].values[0]
     WinningVoteShare = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
+    st.write(f'The result was a {Result}. The MP who serves their seat is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     return Mp2024first, Mp2024second, Result, WinningVoteShare
+
+    
+if 'stage' not in st.session_state:
+    st.session_state.stage = 0
+
+def set_state(i):
+    st.session_state.stage = i
+
+if st.session_state.stage == 0:
+    st.button('Find out their Odds', on_click=set_state, args=[1])
+
+if st.session_state.stage >= 1:
+    CleanName(input)
+    Result = st.selectbox(
+        'Pick a result',
+        [None, 'win', 'lose'],
+        on_change=set_state, args=[2]
+    )
+    #Bet = st.text_input('Bet a value for them to keep their seat', on_change=set_state, args=[2])
+
+if st.session_state.stage >= 2:
+    FindtheChange(st.session_state.firstName, st.session_state.secondName)
+    FindSuccessor(st.session_state.constituency)
+    Next = st.selectbox(
+        'Gamble again?',
+        [None, 'yes'],
+        on_change=set_state, args=[0]
+    )
+    if Next is None:
+        set_state(2)
+
+# if st.session_state.stage >= 3:
+#     st.write(f':{color}[Thank you!]')
+#     st.button('Start Over', on_click=set_state, args=[0])
+##
+
 
 

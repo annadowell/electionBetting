@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+st.image("./header.png")
+
 def load_data(url):
     data = pd.read_csv(url)
     return data
@@ -47,6 +49,13 @@ def FindSuccessor(constituency):
     st.write(f'The result was a {Result}. The MP who serves the seat they contested is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 
+m = st.markdown("""
+<style>
+div.stButton > button:first-child {
+    background-color: rgb(204, 49, 49);
+}
+</style>""", unsafe_allow_html=True)
+
     
 if 'stage' not in st.session_state:
     st.session_state.stage = 0
@@ -64,7 +73,6 @@ if st.session_state.stage >= 1:
         [None, 'win', 'lose'],
         on_change=set_state, args=[2]
     )
-    #Bet = st.text_input('Bet a value for them to keep their seat', on_change=set_state, args=[2])
 
 if st.session_state.stage >= 2:
     FindtheChange(st.session_state.firstName, st.session_state.secondName)
@@ -77,10 +85,6 @@ if st.session_state.stage >= 2:
     if Next is None:
         set_state(2)
 
-# if st.session_state.stage >= 3:
-#     st.write(f':{color}[Thank you!]')
-#     st.button('Start Over', on_click=set_state, args=[0])
-##
 
 
 

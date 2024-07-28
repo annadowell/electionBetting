@@ -31,12 +31,20 @@ def CleanName(string):
     second = split_up[1].lower()
     firstName = first.capitalize()
     secondName = second.capitalize()
-    VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
-    constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
-    st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
-    st.session_state.firstName = firstName
-    st.session_state.secondName = secondName
-    return
+    if firstName in df2019Constituency:
+        thatSurname = df2019Constituency.loc[(df2019Constituency['MemberFirstName'] == firstName), 'MemberSurname'].values[0]
+        if thatSurname == secondName:
+            VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
+            constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
+            st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
+            st.session_state.firstName = firstName
+            st.session_state.secondName = secondName
+            return
+        else:
+            st.write_stream('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+            return
+
+    
     
 def FindtheChange(first, second):
     VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
@@ -91,7 +99,7 @@ if st.session_state.stage == 3:
     FindSuccessor(st.session_state.constituency)
     if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
         #therefore they were right
-        st.balloon()
+        st.balloons()
         st.header('You win!')
         st.write_stream(f'They were indeed re-elected. They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
         
@@ -117,7 +125,7 @@ if st.session_state.stage == 3:
         st.button('Play Again?', on_click=set_state, args=[0])        
     if (st.session_state.newMpForename != st.session_state.firstName) | (st.session_state.newMpSurname != st.session_state.secondName):
         #therefore they were correct, their mp was not re-elected
-        st.balloon()
+        st.balloons()
         st.header('You win!')
         st.write_stream(f'They were indeed not re-elected. They won only {st.session_state.SubjectVoteShare} of the vote in {st.session_state.constituency}. This is the constituency they contested after the new boundaries were created. This was calculated as a swing of {st.session_state.SubjectSwing} compared with their election in 2019. They were succeeded by {st.session_state.newMpForename} {st.session_state.newMpSurname} who won {st.session_state.NewWinningVoteShare} of the vote. The result was {st.session_state.result}.')
         st.button('Play Again?', on_click=set_state, args=[0])

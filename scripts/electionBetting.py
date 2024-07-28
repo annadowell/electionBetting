@@ -6,6 +6,14 @@ def load_data(url):
     data = pd.read_csv(url)
     return data
 
-Constituency2019 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2019-constituency.csv?token=GHSAT0AAAAAACUMUCNQ2WVTQQAWWUTNUUFEZVGJVSA')
+Constituency2019 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2019-constituency.csv')
 df2019Constituency = load_data(Constituency2019)
 st.write(df2019Constituency)
+
+Constituency2024 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2024-constituency.csv')
+df2024Constituency = load_data(Constituency2024)
+st.write(df2024Constituency)
+
+Candidates2024 = ('https://raw.githubusercontent.com/annadowell/electionBetting/main/2024-candidate.csv')
+dfCandidates2024 = load_data(Candidates2024)
+st.write(dfCandidates2024)

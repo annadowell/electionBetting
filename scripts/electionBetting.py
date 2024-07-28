@@ -122,7 +122,7 @@ if st.session_state.stage == 3:
     FindSuccessor(st.session_state.constituency)
     if (st.session_state.newMpForename == st.session_state.firstName) & (st.session_state.newMpSurname == st.session_state.secondName):
         #therefore they were wrong they were re-elected
-        st.audio("audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
+        st.audio("/audio/sadtrombone.swf.mp3", format="audio/mpeg", autoplay="True")
         st.header('You Lose.')
         st.write(f'They were actually re-elected! They won {st.session_state.NewWinningVoteShare} of the vote in {st.session_state.constituency}. This was calculated as a swing of {st.session_state.SubjectSwing} from 2019.')
         st.button('Play Again?', on_click=set_state, args=[0])        

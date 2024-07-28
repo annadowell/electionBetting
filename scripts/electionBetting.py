@@ -75,13 +75,14 @@ def FindSuccessor(constituency):
 if 'stage' not in st.session_state:
     st.session_state.stage = 0
 
-# if st.session_state.stage == 0:
-#     st.button('Find out their Odds')
-
-st.button('Find out their Odds', on_click=set_state, args=[1])
+if st.session_state.stage == 0:
+    st.button('Find out their Odds', on_click=set_state, args=[1])
 
 if st.session_state.stage == 1:
     CleanName(input)
+    st.session_state.stage = 2
+
+if st.session_state.stage == 2:
     Result = st.selectbox(
         'Pick a result',
         [None, 'They Won!', 'They lost.'],

@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import io
 
 def load_data(url):
     data = pd.read_csv(url)
@@ -29,8 +28,30 @@ def CleanName(string):
     constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
     st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
     
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
-if st.button("Find out their Odds"):
+def click_button():
+    st.session_state.clicked = True
+
+st.button('Find out their Odds', on_click=click_button)
+
+if st.session_state.clicked:
+    # The message and nested widget will remain on the page
     CleanName(input)
-    if st.button("Bet"):
-        st.write('place a bet')
+
+
+def FindtheChange(first, second):
+    VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Share'].values[0]
+    Swing = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Change'].values[0]
+    constituency = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Constituency'].values[0]
+    return VoteShare2024, Swing, constituency
+
+def FindSuccessor(constituency):
+    Mp2024first = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberFirstName'].values[0]
+    Mp2024second = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberSurname'].values[0]
+    Result = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'Result'].values[0]
+    WinningVoteShare = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
+    return Mp2024first, Mp2024second, Result, WinningVoteShare
+
+

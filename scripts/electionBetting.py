@@ -36,9 +36,9 @@ def CleanName(string):
     firstName = first.capitalize()
     secondName = second.capitalize()
     if firstName in df2019Constituency['MemberFirstName'].str.capitalize().values:
-        st.write('yay')
+        #st.write('yay')
         if secondName in df2019Constituency['MemberSurname'].str.capitalize().values:
-            st.write('yip')
+            #st.write('yip')
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             constituency = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'Constituency'].values[0]
             st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
@@ -46,9 +46,11 @@ def CleanName(string):
             st.session_state.secondName = secondName
             return
         else:
-            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). YIP', on_change=set_state, args=[0])
+            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+            st.session_state.stage = 0
     else:
-        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). YAY', on_change=set_state, args=[0])
+        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+        st.session_state.stage = 0
 
     
     

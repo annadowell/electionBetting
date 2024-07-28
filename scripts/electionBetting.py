@@ -29,21 +29,22 @@ def CleanName(string):
     st.write(f'In 2019, {firstName} {secondName} won {VoteShare2019} of the vote in their constituency {constituency}. Do you think they kept their seat?')
     st.session_state.firstName = firstName
     st.session_state.secondName = secondName
-    st.session_state.constituency = constituency
+    return
     
 def FindtheChange(first, second):
-    VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Share'].values[0]
-    Swing = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Change'].values[0]
-    constituency = dfCandidates2024.loc[(dfCandidates2024['MemberSurname'] == second) & (dfCandidates2024['MemberFirstName'] == first), 'Constituency'].values[0]
+    VoteShare2024 = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Share'].values[0]
+    Swing = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Change'].values[0]
+    constituency = dfCandidates2024.loc[(dfCandidates2024['CandidateSurname'] == second) & (dfCandidates2024['CandidateFirstName'] == first), 'Constituency'].values[0]
     st.write(f'In 2024, they won {VoteShare2024} of the vote in their constituency {constituency}. This was a swing of {Swing}')
-    return VoteShare2024, Swing, constituency
+    st.session_state.constituency = constituency
+    return
 
 def FindSuccessor(constituency):
     Mp2024first = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberFirstName'].values[0]
     Mp2024second = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'MemberSurname'].values[0]
     Result = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'Result'].values[0]
     WinningVoteShare = Constituency2024.loc[(Constituency2024['Constituency name'] == constituency), 'WinningVoteShare'].values[0]
-    st.write(f'The result was a {Result}. The MP who serves their seat is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
+    st.write(f'The result was a {Result}. The MP who serves the seat they contested is {Mp2024first} {Mp2024second}. They won with a winning vote share of {WinningVoteShare}')
     return Mp2024first, Mp2024second, Result, WinningVoteShare
 
     

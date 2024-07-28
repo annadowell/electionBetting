@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 
-st.image("./header.png")
+st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F6658449%2Fcartoon_fruit_isometric_machine_retro_slot_vintage_icon&psig=AOvVaw0_E-1EwmKz3tPNlpslr7ii&ust=1722268178697000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCP8o-LyocDFQAAAAAdAAAAABAE")
+
+st.title('Bet on the Election')
 
 def load_data(url):
     data = pd.read_csv(url)

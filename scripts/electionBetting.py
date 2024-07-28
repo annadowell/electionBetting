@@ -53,7 +53,7 @@ def CleanName(input):
     secondName = second.capitalize()
     if firstName in df2019Constituency['MemberFirstName'].str.capitalize().values:
         #st.write('yay')
-        if secondName in df2019Constituency['MemberSurname'].str.capitalize().values:
+        if secondName == df2019Constituency.loc[(df2019Constituency['MemberFirstName'] == firstName, 'MemberSurname')].values(0):
             #st.write('yip')
             VoteShare2019 = df2019Constituency.loc[(df2019Constituency['MemberSurname'] == secondName) & (df2019Constituency['MemberFirstName'] == firstName), 'WinningShare'].values[0]
             #Odds = CalculateOdds(VoteShare2019)
@@ -63,10 +63,10 @@ def CleanName(input):
             st.session_state.secondName = secondName
             return
         else:
-            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+            st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). Sometimes, like with Liz Truss, the recorded names are inconsistent between the elections, apologies for these flaws!')
             st.button('Play Again?', on_click=set_state, args=[0])
     else:
-        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here).')
+        st.write('Hmmm that does not match a name in my records. Please try again. It must only be the first and second name of an MP elected in 2019 (those elected in by-elections will not feature here). Sometimes, for example in the case of Liz Truss, the recorded names are inconsistent between the elections, apologies for these flaws!')
         st.button('Play Again?', on_click=set_state, args=[0])
 
     

@@ -34,7 +34,7 @@ if st.session_state.stage == 0:
     st.button('Find out their Odds', on_click=set_state, args=[1])
 
 def CleanName(input):
-    trimmed = input.strip()
+    trimmed = input.strip(' ')
     split_up = [word.strip() for word in trimmed.split(' ')]
     first = split_up[0].lower()
     second = split_up[1].lower()
